@@ -4,7 +4,6 @@ import { Upload } from 'lucide-react';
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [resultImage, setResultImage] = useState(null);
   const [classificationResult, setClassificationResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -25,13 +24,15 @@ function App() {
         method: 'POST',
         body: formData,
       });
-      const text = await res.text();
-      console.log("Raw response:", text);
-      const data = await res.json();
-      const blob = await res.blob();
 
-      // Set the result image and classification result
-      setResultImage(URL.createObjectURL(blob));
+      const data = await res.json(); // Get the JSON response containing classification result
+
+      if (data.error) {
+        console.error('Error:', data.error);
+        return;
+      }
+
+      // Set the classification result from the response
       setClassificationResult(data.result);
     } catch (error) {
       console.error('Upload failed:', error);
@@ -75,13 +76,6 @@ function App() {
           <div className="mt-6">
             <h2 className="text-lg font-semibold mb-2">Classification Result:</h2>
             <p className="text-lg font-medium text-green-600">{classificationResult}</p>
-          </div>
-        )}
-
-        {resultImage && (
-          <div className="mt-8">
-            <h2 className="text-lg font-semibold mb-2">Classified Output:</h2>
-            <img src={resultImage} alt="Classified" className="w-full rounded-lg border-2 border-green-500 shadow-xl" />
           </div>
         )}
       </div>
