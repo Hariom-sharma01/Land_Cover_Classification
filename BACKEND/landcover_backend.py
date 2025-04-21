@@ -68,18 +68,8 @@ def classify():
         # Step 2: Classify land cover
         land_cover_type = classify_land_cover_text(enhanced_img)
 
-        # Step 3: Classify land cover visually
-        classified_img = classify_land_cover(enhanced_img)
-
-        # Step 4: Send both image and text result
-        buffer = io.BytesIO()
-        classified_img.save(buffer, format='JPEG')
-        buffer.seek(0)
-
-        # Return both image and text result
-        return send_file(buffer, mimetype='image/jpeg', as_attachment=False), jsonify({
-            'result': land_cover_type
-        })
+        # Step 3: Return classification result as JSON
+        return jsonify({'result': land_cover_type})
 
     except Exception as e:
         return {"error": str(e)}, 500

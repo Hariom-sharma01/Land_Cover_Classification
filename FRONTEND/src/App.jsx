@@ -21,11 +21,12 @@ function App() {
     formData.append('image', selectedFile);
 
     try {
-      const res = await fetch('https://shiny-goldfish-9vxx977wwv6hpg79-5000.app.github.dev//classify', {
+      const res = await fetch('https://land-cover-classification-4.onrender.com/classify', {
         method: 'POST',
         body: formData,
       });
-
+      const text = await res.text();
+      console.log("Raw response:", text);
       const data = await res.json();
       const blob = await res.blob();
 
