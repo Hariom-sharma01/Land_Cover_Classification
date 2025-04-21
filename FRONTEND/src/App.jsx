@@ -21,7 +21,7 @@ function App() {
     formData.append('image', selectedFile);
 
     try {
-      const res = await fetch('http://localhost:5000/classify', {
+      const res = await fetch('https://shiny-goldfish-9vxx977wwv6hpg79-5000.app.github.dev//classify', {
         method: 'POST',
         body: formData,
       });

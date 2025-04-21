@@ -4,8 +4,10 @@ import io
 import cv2
 import numpy as np
 from utils.land_cover_utils import classify_land_cover
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 def enhance_image(pil_img):
     """
